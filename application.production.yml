@@ -1,8 +1,8 @@
-port: 9000
+port: 9001
 prefix: api
 
-# token过期时间为7天
-tokenExpire: 7
+# token过期时间为1天
+tokenExpire: 1
 
 # 数据库配置
 database:
@@ -14,4 +14,4 @@ database:
   password: 12345678
   charset: utf8mb4
   logging: true
-  synchronize: true
+  synchronize: false
