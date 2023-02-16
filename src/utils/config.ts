@@ -10,7 +10,7 @@ export const getEnv = () => {
 export const IS_DEV = getEnv() === 'development';
 
 // 读取项目配置
-export const getConfig = () => {
+export const getConfig = (): IConfig => {
   const environment = getEnv();
   console.log(environment, '当前运行的环境');
   const yamlPath = path.join(process.cwd(), `./application.${environment}.yml`);

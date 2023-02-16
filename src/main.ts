@@ -5,10 +5,12 @@ import { Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import * as express from 'express';
 import * as compression from 'compression';
+import { getConfig, IS_DEV } from './utils';
 
-const PORT = process.env.PORT || 8080;
-const PREFIX = process.env.PREFIX || '/';
-export const IS_DEV = process.env.NODE_ENV !== 'production';
+const config = getConfig();
+
+const PORT = config.port || 8080;
+const PREFIX = config.prefix || '/';
 
 async function bootstrap() {
   const logger: Logger = new Logger('main.ts');

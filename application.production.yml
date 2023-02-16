@@ -1,5 +1,5 @@
-PORT: 9000
-PREFIX: api
+port: 9000
+prefix: api
 
 # token过期时间为7天
 tokenExpire: 7
@@ -13,6 +13,5 @@ database:
   username: root
   password: 12345678
   charset: utf8mb4
-  loc: Asia/Shanghai
   logging: true
   synchronize: true
