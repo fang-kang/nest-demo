@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -24,16 +23,18 @@ async function bootstrap() {
   // 给请求添加prefix
   app.setGlobalPrefix(PREFIX);
 
-  const options = new DocumentBuilder()
-    .setTitle('权限系统管理  api文档')
-    .setDescription('权限系统管理  api接口文档')
-    .setBasePath(PREFIX)
-    .addBearerAuth({ type: 'apiKey', in: 'header', name: 'token' })
-    .setVersion('0.0.1')
-    .build();
+  if (IS_DEV) {
+    const options = new DocumentBuilder()
+      .setTitle('权限系统管理  api文档')
+      .setDescription('权限系统管理  api接口文档')
+      .setBasePath(PREFIX)
+      .addBearerAuth({ type: 'apiKey', in: 'header', name: 'token' })
+      .setVersion('0.0.1')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup(`${PREFIX}/docs`, app, document);
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup(`${PREFIX}/docs`, app, document);
+  }
 
   // Web漏洞的
   app.use(helmet());
