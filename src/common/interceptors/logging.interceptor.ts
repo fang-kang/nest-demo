@@ -1,9 +1,12 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor, Logger } from '@nestjs/common';
+import { LoggerService } from '@src/plugin/logger/logger.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
+  constructor(private readonly logger: LoggerService) {}
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
     /**当前请求方式 */
@@ -30,9 +33,7 @@ export class LoggingInterceptor implements NestInterceptor {
           query,
           data,
         };
-
-        console.log('==============================================================', message);
-
+        this.logger.info(message, '中间件记录日志');
         return data;
       })
     );

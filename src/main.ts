@@ -8,7 +8,7 @@ import * as compression from 'compression';
 import { getConfig, IS_DEV } from './utils';
 import { join } from 'path';
 
-const config = getConfig();
+export const config = getConfig();
 
 const PORT = config.port || 8080;
 const PREFIX = config.prefix || '/';

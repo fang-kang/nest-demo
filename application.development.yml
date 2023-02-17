@@ -16,3 +16,6 @@ database:
   charset: utf8mb4
   logging: true
   synchronize: true
+
+# 腾讯地图api
+lbsKey: LW7BZ-NB7C5-QNDSX-VCZVT-D7FQ4

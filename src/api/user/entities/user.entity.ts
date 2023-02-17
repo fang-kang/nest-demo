@@ -1,5 +1,5 @@
-import { SharedEntity } from '@src/common/entities/shared.entity';
 import { StatusEnum } from '@src/common/enums';
+import { SharedEntity } from '@src/shared/entities/base.entity';
 import { Column, Entity, Index } from 'typeorm';
 
 @Entity('users')

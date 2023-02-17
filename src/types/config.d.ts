@@ -8,6 +8,7 @@ declare interface IConfig {
    */
   prefix: string;
   baseUrl: string;
+  lbsKey: string;
   /**
    * token过期时间
    */

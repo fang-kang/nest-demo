@@ -1,14 +1,19 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
-import { ValidationPipe } from './common/pipes/validation.pipe';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { UserModule } from './module/user/user.module';
+import {
+  LoggingInterceptor,
+  RedisCacheInterceptor,
+  RedisLimitInterceptor,
+  TransformInterceptor,
+} from './common/interceptors';
+import { ValidationPipe } from './common/pipes';
+import { HttpExceptionFilter } from './common/filters';
 import { getConfig } from './utils';
-import { FileModule } from './module/file/file.module';
+import { SharedModule } from './shared/shared.module';
+import { PluginModule } from './plugin/plugin.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -45,11 +50,13 @@ import { FileModule } from './module/file/file.module';
       }),
       inject: [ConfigService],
     }),
-    UserModule,
-    FileModule,
+    SharedModule,
+    PluginModule,
+    ApiModule,
   ],
   controllers: [],
   providers: [
+    Logger,
     {
       provide: APP_INTERCEPTOR,
       useClass: TransformInterceptor,
@@ -57,6 +64,14 @@ import { FileModule } from './module/file/file.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RedisLimitInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RedisCacheInterceptor,
     },
     // 全局使用管道(数据校验)
     {
