@@ -8,6 +8,7 @@ import { ValidationPipe } from './common/pipes/validation.pipe';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { UserModule } from './module/user/user.module';
 import { getConfig } from './utils';
+import { FileModule } from './module/file/file.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { getConfig } from './utils';
       inject: [ConfigService],
     }),
     UserModule,
+    FileModule,
   ],
   controllers: [],
   providers: [

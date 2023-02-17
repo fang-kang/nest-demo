@@ -7,6 +7,7 @@ declare interface IConfig {
    * api前缀
    */
   prefix: string;
+  baseUrl: string;
   /**
    * token过期时间
    */

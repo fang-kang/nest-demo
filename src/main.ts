@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import * as express from 'express';
 import * as compression from 'compression';
 import { getConfig, IS_DEV } from './utils';
+import { join } from 'path';
 
 const config = getConfig();
 
@@ -24,8 +25,9 @@ async function bootstrap() {
   app.enableCors();
   // 给请求添加prefix
   app.setGlobalPrefix(PREFIX);
-
+  let rootDir: string;
   if (IS_DEV) {
+    rootDir = join(__dirname, '..');
     const options = new DocumentBuilder()
       .setTitle('权限系统管理  api文档')
       .setDescription('权限系统管理  api接口文档')
@@ -36,7 +38,11 @@ async function bootstrap() {
 
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup(`${PREFIX}/docs`, app, document);
+  } else {
+    rootDir = join(__dirname, '.');
   }
+
+  app.use('/public', express.static(join(rootDir, 'public')));
 
   // Web漏洞的
   app.use(helmet());

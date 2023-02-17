@@ -5,7 +5,7 @@ import * as dayjs from 'dayjs';
  * @param isDue 是否显示时分秒
  * @returns
  */
-export const formatDate = (dateNum: string | number | Date, isDue = true): string => {
+export const formatDate = (dateNum?: string | number | Date, isDue = true): string => {
   if (isDue) {
     return dayjs(dateNum).format('YYYY-MM-DD HH:mm:ss');
   } else {

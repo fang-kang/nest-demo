@@ -1,5 +1,6 @@
 port: 9001
 prefix: api
+baseUrl: localhost:9001/
 
 # token过期时间为1天
 tokenExpire: 1
