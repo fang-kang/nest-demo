@@ -1,5 +1,12 @@
 
 
+## [0.0.3](https://github.com/fang-kang/nest-demo/compare/0.0.2...0.0.3) (2023-02-17)
+
+
+### Features
+
+* 结构调整 ([c57e2d7](https://github.com/fang-kang/nest-demo/commit/c57e2d720c84be2b0af50f76df8704f63a5f8c01))
+
 ## 0.0.2 (2023-02-17)
 
 
