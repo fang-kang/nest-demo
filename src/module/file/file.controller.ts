@@ -12,11 +12,11 @@ export class FileController {
   @Post('upload')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
-    summary: '图片上传',
+    summary: '文件上传',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: '选择图片',
+    description: '选择文件',
     type: FileUploadDto,
   })
   @UseInterceptors(FileInterceptor('file'))
