@@ -115,5 +115,5 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
-  },
+  }
 }
