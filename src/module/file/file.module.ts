@@ -18,7 +18,7 @@ import { formatDate } from '@src/utils';
           const index = originalname.lastIndexOf('.');
           const ext = originalname.substring(index + 1, originalname.length);
           // 自定义文件名
-          const filename = `${v4()}.${ext}`;
+          const filename = `${v4().replace(/-/g, '')}.${ext}`;
           return cb(null, filename);
         },
       }),
