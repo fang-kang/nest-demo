@@ -2,15 +2,10 @@ import { ClassSerializerInterceptor, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import {
-  LoggingInterceptor,
-  RedisCacheInterceptor,
-  RedisLimitInterceptor,
-  TransformInterceptor,
-} from './common/interceptors';
+import { LoggingInterceptor, TransformInterceptor } from './common/interceptors';
 import { ValidationPipe } from './common/pipes';
 import { HttpExceptionFilter } from './common/filters';
-import { getConfig } from './utils';
+import customConfig from './config';
 import { SharedModule } from './shared/shared.module';
 import { PluginModule } from './plugin/plugin.module';
 import { ApiModule } from './api/api.module';
@@ -21,7 +16,7 @@ import { ApiModule } from './api/api.module';
     ConfigModule.forRoot({
       ignoreEnvFile: false, // 忽视默认读取.env的文件配置
       isGlobal: true, // 全局注入
-      load: [getConfig], // 加载配置文件
+      load: [() => customConfig], // 加载配置文件
     }),
     // mysql的连接
     TypeOrmModule.forRootAsync({
@@ -64,14 +59,6 @@ import { ApiModule } from './api/api.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RedisLimitInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RedisCacheInterceptor,
     },
     // 全局使用管道(数据校验)
     {

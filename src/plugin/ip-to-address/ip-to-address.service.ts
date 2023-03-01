@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { config } from '@src/main';
+import config from '@src/config';
 import axios from 'axios';
 
 export interface IPAddress {

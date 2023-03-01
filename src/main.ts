@@ -5,10 +5,9 @@ import { Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import * as express from 'express';
 import * as compression from 'compression';
-import { getConfig, IS_DEV } from './utils';
+import { IS_DEV } from './utils';
+import config from './config';
 import { join } from 'path';
-
-export const config = getConfig();
 
 const PORT = config.port || 8080;
 const PREFIX = config.prefix || '/';
@@ -28,19 +27,20 @@ async function bootstrap() {
   let rootDir: string;
   if (IS_DEV) {
     rootDir = join(__dirname, '..');
-    const options = new DocumentBuilder()
-      .setTitle('权限系统管理  api文档')
-      .setDescription('权限系统管理  api接口文档')
-      .setBasePath(PREFIX)
-      .addBearerAuth({ type: 'apiKey', in: 'header', name: 'token' })
-      .setVersion('0.0.1')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup(`${PREFIX}/docs`, app, document);
   } else {
     rootDir = join(__dirname, '.');
   }
+
+  const options = new DocumentBuilder()
+    .setTitle('权限系统管理  api文档')
+    .setDescription('权限系统管理  api接口文档')
+    .setBasePath(PREFIX)
+    .addBearerAuth({ type: 'apiKey', in: 'header', name: 'token' })
+    .setVersion('0.0.1')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup(`${PREFIX}/docs`, app, document);
 
   app.use('/public', express.static(join(rootDir, 'public')));
 
